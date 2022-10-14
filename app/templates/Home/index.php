@@ -1,3 +1,16 @@
+<!-- chuc nang  -->
+
+<!-- * command line  -->
+<!-- 0 chay command clone git
+1 copy code tu project default
+2 chay command composer install
+3 chay command sua file httpd.conf
+4 chạy command sửa file hosts 
+5 khởi động lại mamp -->
+
+<!-- * tạo backlog khi check vào checkbox -->
+<!-- * đọc status của backlog show trạng thái (Basic認証設定, 本番メール交換) -->
+
 <?php $this->start('css') ?>
 <style>
     .card {
@@ -40,13 +53,13 @@
             <div class="card">
                 <div class="card-header <?= $project->is_publish == 1 ? 'bg-success' : 'water' ?>" id="headingOne<?= $project->id ?>">
                     <h5 class="mb-0">
-                        <button class="btn btn-link collapsed <?= $project->is_publish == 1 ? 'text-white' : '' ?>" data-toggle="collapse" data-target="#collapseOne<?= $project->id ?>" aria-expanded="false" aria-controls="collapseOne<?= $project->id ?>">
+                        <button onclick="chosse_project(this)" class="btn btn-link collapsed <?= $project->is_publish == 1 ? 'text-white' : '' ?>" data-toggle="collapse" data-target="#collapseOne<?= $project->id ?>" aria-expanded="false" aria-controls="collapseOne<?= $project->id ?>">
                             <?= $project->name ?>
                         </button>
                     </h5>
                 </div>
 
-                <div id="collapseOne<?= $project->id ?>" class="collapse" aria-labelledby="headingOne<?= $project->id ?>" data-parent="#accordion">
+                <div id="collapseOne<?= $project->id ?>" class="collapse" aria-labelledby="headingOne<?= $project->id ?>" data-id="<?= $project->id ?>" data-parent="#accordion">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-4">
@@ -89,6 +102,10 @@
                                             <td>課題作成</td>
                                             <td><?php if ($project->task_created == 1) : ?><span class="badge badge-success">作成した</span><?php else : ?><span class="badge badge-danger">作成しなかった</span><?php endif ?></td>
                                         </tr>
+                                        <tr>
+                                            <td>GIT URL</td>
+                                            <td><?= $this->Html->link($project->git_url, $project->git_url, ['target' => '_blank']); ?></td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -116,7 +133,11 @@
                                         </tr>
                                         <tr>
                                             <td>Basic認証設定</td>
-                                            <td><?php if ($project->passwd_is_setting == 1) : ?><span class="badge badge-success">設定している</span><?php else : ?><span class="badge badge-danger">設定していない</span><?php endif ?></td>
+                                            <td>
+                                                <?= $this->Form->input('passwd_task_id', ['type' => 'hidden', 'value' => $project->passwd_task_id]) ?>
+                                                <?= $this->Form->input('passwd_is_setting', ['type' => 'hidden', 'value' => $project->passwd_is_setting]) ?>
+                                                <?php if ($project->passwd_is_setting == 1) : ?><span class="badge badge-success">設定している</span><?php else : ?><span class="badge badge-danger">設定していない</span><?php endif ?>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -145,7 +166,19 @@
                                         </tr>
                                         <tr>
                                             <td>本番メール交換</td>
-                                            <td><?php if ($project->mail_is_setting == 1) : ?><span class="badge badge-success">交換している</span><?php else : ?><span class="badge badge-danger">交換していない</span><?php endif ?></td>
+                                            <td>
+                                                <?= $this->Form->input('mail_setting_task_id', ['type' => 'hidden', 'value' => $project->mail_setting_task_id]) ?>
+                                                <?= $this->Form->input('mail_is_setting', ['type' => 'hidden', 'value' => $project->mail_is_setting]) ?>
+                                                <?php if ($project->mail_is_setting == 1) : ?><span class="badge badge-success">交換している</span><?php else : ?><span class="badge badge-danger">交換していない</span><?php endif ?>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>公開</td>
+                                            <td>
+                                                <?= $this->Form->input('publish_task_id', ['type' => 'hidden', 'value' => $project->publish_task_id]) ?>
+                                                <?= $this->Form->input('is_publish', ['type' => 'hidden', 'value' => $project->is_publish]) ?>
+                                                <?php if ($project->is_publish == 1) : ?><span class="badge badge-success">公開している</span><?php else : ?><span class="badge badge-danger">公開していない</span><?php endif ?>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -159,3 +192,7 @@
     <?php endforeach; ?>
 
 </div>
+
+<?php $this->start('js') ?>
+<?= $this->Html->script(['js']) ?>
+<?php $this->end() ?>

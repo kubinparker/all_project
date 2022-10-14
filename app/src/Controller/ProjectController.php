@@ -19,6 +19,12 @@ class ProjectController extends AppController
         if ($this->request->is(['post', 'put'])) {
             $table->patchEntity($project, $this->request->getData());
             $table->save($project);
+
+            if ($this->request->is(['ajax'])) {
+                echo json_encode(['success' => true]);
+                exit();
+            }
+
             $this->redirect('/');
         }
         $this->set('table', $project);

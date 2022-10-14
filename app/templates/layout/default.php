@@ -23,6 +23,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 <head>
     <?= $this->Html->charset() ?>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <?= $this->Html->meta("__token__", $this->request->getAttribute("csrfToken")); ?>
     <title>
         プロジェクト管理システム
     </title>
@@ -56,9 +57,10 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <footer>
     </footer>
 
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <?= $this->Html->script(['bootstrap/bootstrap.min']) ?>
+    <?= $this->Html->script(['bootstrap/bootstrap.min', 'js_library', 'backlog']) ?>
+    <?= $this->fetch('js') ?>
 </body>
 
 </html>
